@@ -1,0 +1,47 @@
+name: Build Pcl2Unlocker
+
+# 手动触发：构建 Pcl2Unlocker 单文件版（自包含 win-x64，无需安装 .NET）
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build single-file Pcl2Unlocker
+    runs-on: windows-latest
+
+    steps:
+
+    - name: Checkout
+      uses: actions/checkout@v6
+      with:
+        fetch-depth: 1
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '8.0.x'
+
+    - name: Publish single-file
+      run: dotnet publish Pcl2Unlocker.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -o publish
+
+    - name: Smoke test
+      run: .\publish\Pcl2Unlocker.exe --help
+
+    - name: Checksum
+      shell: bash
+      run: |
+        sha256sum publish/Pcl2Unlocker.exe | tee checksum.txt
+        {
+          echo "### Pcl2Unlocker 单文件版"
+          echo '```'
+          cat checksum.txt
+          echo '```'
+        } >> "$GITHUB_STEP_SUMMARY"
+
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v7
+      with:
+        name: Pcl2Unlocker-win-x64
+        path: |
+          publish/Pcl2Unlocker.exe
+          README.md

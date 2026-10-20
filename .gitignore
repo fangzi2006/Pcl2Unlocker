@@ -1,0 +1,57 @@
+# 编译输出
+[Bb]in/
+[Oo]bj/
+[Bb]uild/
+[Ll]og/
+[Ll]ogs/
+
+# 发布目录
+publish/
+PublishScripts/
+
+# Visual Studio / IDE
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.rsuser
+*.userprefs
+.idea/
+*.DotSettings.user
+
+# 编译中间产物
+*.pdb
+*.cache
+*.tlog
+*.ilk
+*.tmp
+
+# NuGet
+*.nupkg
+*.snupkg
+**/[Pp]ackages/*
+!**/[Pp]ackages/build/
+*.nuget.props
+*.nuget.targets
+project.lock.json
+project.assets.json
+
+# 测试与覆盖率
+[Tt]est[Rr]esult*/
+coverage.*
+*.coverage
+
+# 发布配置（可能含密码、连接字符串）
+*.pubxml
+*.publishproj
+*.[Pp]ublish.xml
+
+# 敏感配置
+.env
+*.secrets.json
+appsettings.Development.json
+
+# 系统文件
+.DS_Store
+Thumbs.db
